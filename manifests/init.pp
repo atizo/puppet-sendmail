@@ -10,6 +10,17 @@
 # modules_dir { "sendmail": }
 class sendmail {
     include sendmail::base
+
+    exec{sendmail_make:
+        command => 'cd /etc/mail/ && make',
+        refreshonly => true,
+        require => Package[sendmail],
+    }
+    exec{newaliases:
+        command => '/usr/bin/newaliases',
+        refreshonly => true,
+        require => Package[sendmail],
+    }
 }
 
 class sendmail::base {

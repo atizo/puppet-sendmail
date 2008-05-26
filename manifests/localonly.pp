@@ -13,13 +13,6 @@ class sendmail::localonly inherits sendmail {
         mode => 0644, owner => root, group => 0;
     }
 
-    exec{newaliases:
-        command => '/usr/bin/newaliases',
-        refreshonly => true,
-        require => Package[sendmail],
-    }
-
-
     $real_sendmail_mailroot = $sendmail_mailroot ? {
         '' => 'monitor@ww2.ch',
         default => $sendmail_mailroot
@@ -32,9 +25,4 @@ class sendmail::localonly inherits sendmail {
         mode => 0644, owner => root, group => 0;
     }
 
-    exec{sendmail_make:
-        command => 'cd /etc/mail/ && make',
-        refreshonly => true,
-        require => Package[sendmail],
-    }
 }
