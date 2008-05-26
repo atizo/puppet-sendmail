@@ -24,26 +24,4 @@ class sendmail::localonly inherits sendmail {
         require => Package[sendmail],
         mode => 0644, owner => root, group => 0;
     }
-
-    if $use_sendmail {
-        include sendmail::shorewall::localonly
-    }
-}
-
-class sendmail::shorewall::localonly {
-    case $shorewall_mailserver {
-        '': { $mailserver_dest = 'all' }
-        default: { 
-            shorewall::param{"MAILSERVER": value => "$shorewall_mailserver" }
-            $mailserver_dest = 'net:$MAILSERVER'
-        }
-    }
-    shorewall::rule { 'me-net-mailserver_tcp':
-        source          => '$FW',
-        destination     => "$mailserver_dest",
-        proto           => 'tcp',
-        destinationport => 'smtp,smtps',
-        order           => 320,
-        action          => 'ACCEPT';
-    }
 }
