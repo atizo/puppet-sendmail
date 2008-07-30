@@ -26,6 +26,10 @@ class sendmail {
         refreshonly => true,
         require => Package[sendmail],
     }
+
+    if $use_munin {
+        include munin::sendmail
+    }
 }
 
 class sendmail::base {
