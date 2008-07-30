@@ -4,10 +4,11 @@
 
 class sendmail::localonly inherits sendmail {
     file{"/etc/aliases":
-        source => [ "puppet://$server/files/sendmail/aliases/aliases.${operatingsystem}",
-                    "puppet://$server/files/sendmail/aliases/aliases",
-                    "puppet://$server/sendmail/aliases/aliases.${operatingsystem}",
-                    "puppet://$server/sendmail/aliases/aliases" ],
+        source => [ "puppet://$server/files/sendmail/aliases/localonly/${fqdn}/aliases",
+                    "puppet://$server/files/sendmail/aliases/localonly/${operatingsystem}/aliases",
+                    "puppet://$server/files/sendmail/aliases/localonly/aliases",
+                    "puppet://$server/sendmail/aliases/localonly/${operatingsystem}/aliases",
+                    "puppet://$server/sendmail/aliases/localonly/aliases" ],
         require => Package[sendmail],
         notify => Exec[newaliases],
         mode => 0644, owner => root, group => 0;
