@@ -1,10 +1,10 @@
 # manifests/munin.pp
 
-class munin::sendmail {
+class sendmail::munin {
     munin::plugin{'sendmail': }
 }
 
-class munin::sendmail::disable inherits munin::sendmail {
+class sendmail::munin::disable inherits sendmail::munin {
     Munin::Plugin['sendmail']{
          ensure => 'absent' 
     }

@@ -12,6 +12,6 @@ class sendmail::disable inherits sendmail {
     }
 
     if $use_munin {
-        include munin::sendmail::disable
+        include sendmail::munin::disable
     }
 }
