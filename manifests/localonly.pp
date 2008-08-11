@@ -1,6 +1,6 @@
 # manifests/localonly.pp
 # manages sendmail installations
-# which use sendmail only localy
+# which use sendmail only locally
 
 class sendmail::localonly inherits sendmail {
     file{"/etc/aliases":

@@ -17,7 +17,7 @@ class sendmail {
     include sendmail::base
 
     exec{sendmail_make:
-        command => 'cd /etc/mail/ && make',
+        command => '/usr/bin/make -C /etc/mail',
         refreshonly => true,
         require => Package[sendmail],
     }
