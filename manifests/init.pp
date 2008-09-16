@@ -15,17 +15,7 @@
 
 class sendmail {
     include sendmail::base
-
-    exec{sendmail_make:
-        command => '/usr/bin/make -C /etc/mail',
-        refreshonly => true,
-        require => Package[sendmail],
-    }
-    exec{newaliases:
-        command => '/usr/bin/newaliases',
-        refreshonly => true,
-        require => Package[sendmail],
-    }
+    include sendmail::manage
 
     if $use_munin {
         include sendmail::munin
