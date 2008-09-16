@@ -8,7 +8,7 @@ class sendmail::localonly inherits sendmail {
     }
 
     mailalias{'root':
-        recepient => $sendmail_mailroot,
+        recipient => $sendmail_mailroot,
     }
 
     file{"/etc/mail/virtusertable":
