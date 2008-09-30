@@ -10,7 +10,7 @@ define sendmail::mailalias(
     mailalias{"$name":
         ensure => $ensure,
         recipient => $recipient,
-        target = $taraget,
+        target => $target,
         notify => Exec['refresh_aliases'],
     }
 }
