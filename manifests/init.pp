@@ -13,6 +13,8 @@
 
 # modules_dir { "sendmail": }
 
+import 'defines.pp'
+
 class sendmail {
     include sendmail::base
     include sendmail::manage
@@ -33,3 +35,4 @@ class sendmail::base {
         require => Package[sendmail],
     }
 }
+

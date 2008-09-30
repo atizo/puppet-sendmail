@@ -7,7 +7,7 @@ class sendmail::localonly inherits sendmail {
         '': { fail("you need to define \$sendmail_mailroot to use this feature") }
     }
 
-    mailalias{'root':
+    sendmail::mailalias{'root':
         recipient => $sendmail_mailroot,
     }
 
