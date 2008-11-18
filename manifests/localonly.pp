@@ -7,7 +7,7 @@
 
 class sendmail::localonly inherits sendmail {
     case $sendmail_mailroot {
-        '': { fail("you need to define \$sendmail_mailroot to use this feature") }
+        '': { fail("you need to define \$sendmail_mailroot on ${fqdn} to use this feature") }
     }
 
     sendmail::mailalias{'root':
@@ -16,7 +16,10 @@ class sendmail::localonly inherits sendmail {
 
     file{"/etc/mail/virtusertable":
         notify => Exec[sendmail_make],
-        require => Package[sendmail],
+        require => $kernel ? {
+            linux => Package[sendmail], 
+            default => undef,
+        },
         mode => 0644, owner => root, group => 0;
     }
     case $sendmail_localonly_virtusertable_src {

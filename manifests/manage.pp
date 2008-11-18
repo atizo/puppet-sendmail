@@ -8,20 +8,35 @@
 class sendmail::manage {
 
     Mailalias { 
-        target => '/etc/aliases',
-        require => Package[sendmail],
+        target => $operatingsystem ? {
+            openbsd => '/etc/mail/aliases',
+            default => '/etc/aliases',
+        },
+        require => $operatingsystem ? {
+            linux => Package[sendmail],
+            default => undef,
+        },
         notify => Exec['newaliases'],
     }
 
     exec{'newaliases':
         command => '/usr/bin/newaliases',
         refreshonly => true,
-        require => Package[sendmail],
+        require => $operatingsystem ? {
+            linux => Package[sendmail],
+            default => undef,
+        },
     }
 
     exec{sendmail_make:
-        command => '/usr/bin/make -C /etc/mail',
+        command => $kernel ? {
+            openbsd => 'cd /etc/mail && /usr/bin/make',
+            default => '/usr/bin/make -C /etc/mail',
+        },
         refreshonly => true,
-        require => Package[sendmail],
+        require => $operatingsystem ? {
+            linux => Package[sendmail],
+            default => undef,
+        },
     }
 }

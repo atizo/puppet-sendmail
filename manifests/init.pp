@@ -16,7 +16,10 @@
 import 'defines.pp'
 
 class sendmail {
-    include sendmail::base
+    case $kernel {
+        linux: { include sendmail::base }
+    }
+
     include sendmail::manage
 
     if $use_munin {
